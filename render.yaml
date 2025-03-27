@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: student-performance-prediction
+    env: python
+    buildCommand: ./build.sh
+    startCommand: gunicorn app:app
+    repo: https://github.com/username/repo-name  # Replace with your actual repository URL
+    branch: main  # Or your default branch
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.8.16
+    plan: free
+    autoDeploy: true 

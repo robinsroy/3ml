@@ -13,8 +13,12 @@ from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 import joblib
 import os
+import logging
 
 app = Flask(__name__)
+
+# Reduce verbosity in production
+logging.basicConfig(level=logging.WARNING)
 
 # Global variables for models and scalers
 logistic_model = None
@@ -374,8 +378,19 @@ def predict_polynomial():
         'prediction': float(prediction)
     })
 
+# Train models once on startup
+@app.before_first_request
+def train_models_on_startup():
+    global logistic_model, knn_model, poly_model, scaler, poly_features_transformer
+    # Only train if models aren't already trained
+    if logistic_model is None:
+        print("Training models on first request...")
+        metrics = train_models()
+        print(f"Models trained successfully with metrics: {metrics}")
+
 if __name__ == '__main__':
-    # Train models on startup
+    # For local development, train models immediately
+    print("Training models during startup...")
     train_models()
     # Use PORT environment variable for Render compatibility
     port = int(os.environ.get('PORT', 5000))
