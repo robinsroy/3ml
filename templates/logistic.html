@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Logistic Regression{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Pass/Fail Prediction</h5>
+                <form id="logisticForm">
+                    <div class="mb-3">
+                        <label for="study_hours" class="form-label">Study Hours per Day</label>
+                        <input type="number" class="form-control" id="study_hours" name="study_hours" min="0" max="24" step="0.5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendance" class="form-label">Attendance Percentage</label>
+                        <input type="number" class="form-control" id="attendance" name="attendance" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="previous_scores" class="form-label">Previous Exam Scores</label>
+                        <input type="number" class="form-control" id="previous_scores" name="previous_scores" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="parental_education" class="form-label">Parental Education Level</label>
+                        <select class="form-select" id="parental_education" name="parental_education" required>
+                            <option value="0">High School</option>
+                            <option value="1">Bachelor's Degree</option>
+                            <option value="2">Master's Degree</option>
+                            <option value="3">PhD</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mid_term_scores" class="form-label">Mid-term Scores</label>
+                        <input type="number" class="form-control" id="mid_term_scores" name="mid_term_scores" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="study_group" class="form-label">Study Group Participation</label>
+                        <select class="form-select" id="study_group" name="study_group" required>
+                            <option value="none">None</option>
+                            <option value="occasional" selected>Occasional</option>
+                            <option value="regular">Regular</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="health_status" class="form-label">Health Status</label>
+                        <select class="form-select" id="health_status" name="health_status" required>
+                            <option value="poor">Poor</option>
+                            <option value="average">Average</option>
+                            <option value="good" selected>Good</option>
+                            <option value="excellent">Excellent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Predict</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Prediction Results</h5>
+                <div id="results" class="text-center">
+                    <p class="text-muted">Enter your data and click "Predict" to see results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#logisticForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            study_hours: $('#study_hours').val(),
+            attendance: $('#attendance').val(),
+            previous_scores: $('#previous_scores').val(),
+            parental_education: $('#parental_education').val(),
+            mid_term_scores: $('#mid_term_scores').val(),
+            study_group: $('#study_group').val(),
+            health_status: $('#health_status').val()
+        };
+        
+        $.ajax({
+            url: '/predict_logistic',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                const probability = (response.probability * 100).toFixed(2);
+                const prediction = response.prediction === 1 ? 'Pass' : 'Fail';
+                const color = response.prediction === 1 ? 'success' : 'danger';
+                
+                $('#results').html(`
+                    <div class="alert alert-${color}">
+                        <h4>Prediction: ${prediction}</h4>
+                        <p>Probability of Passing: ${probability}%</p>
+                        <hr>
+                        <div class="mt-3">
+                            <h5>Key Factors:</h5>
+                            <ul class="text-start">
+                                <li>Study Hours: ${formData.study_hours} hours/day</li>
+                                <li>Attendance: ${formData.attendance}%</li>
+                                <li>Mid-term Scores: ${formData.mid_term_scores}</li>
+                            </ul>
+                        </div>
+                    </div>
+                `);
+            },
+            error: function() {
+                $('#results').html(`
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while making the prediction. Please try again.</p>
+                    </div>
+                `);
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}KNN{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Study Strategy Recommendation</h5>
+                <form id="knnForm">
+                    <div class="mb-3">
+                        <label for="study_hours" class="form-label">Study Hours per Day</label>
+                        <input type="number" class="form-control" id="study_hours" name="study_hours" min="0" max="24" step="0.5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="attendance" class="form-label">Attendance Percentage</label>
+                        <input type="number" class="form-control" id="attendance" name="attendance" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sleep_hours" class="form-label">Sleep Hours per Day</label>
+                        <input type="number" class="form-control" id="sleep_hours" name="sleep_hours" min="0" max="24" step="0.5" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="extracurricular_activities" class="form-label">Extracurricular Activities Level</label>
+                        <select class="form-select" id="extracurricular_activities" name="extracurricular_activities" required>
+                            <option value="0">Low (0-2 activities)</option>
+                            <option value="1" selected>Medium (3-4 activities)</option>
+                            <option value="2">High (5+ activities)</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="mid_term_scores" class="form-label">Mid-term Scores</label>
+                        <input type="number" class="form-control" id="mid_term_scores" name="mid_term_scores" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="previous_scores" class="form-label">Previous Exam Scores</label>
+                        <input type="number" class="form-control" id="previous_scores" name="previous_scores" min="0" max="100" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="health_status" class="form-label">Health Status</label>
+                        <select class="form-select" id="health_status" name="health_status" required>
+                            <option value="poor">Poor</option>
+                            <option value="average">Average</option>
+                            <option value="good" selected>Good</option>
+                            <option value="excellent">Excellent</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Get Recommendations</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Recommendations</h5>
+                <div id="results" class="text-center">
+                    <p class="text-muted">Enter your data and click "Get Recommendations" to see results</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#knnForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            study_hours: $('#study_hours').val(),
+            attendance: $('#attendance').val(),
+            sleep_hours: $('#sleep_hours').val(),
+            extracurricular_activities: $('#extracurricular_activities').val(),
+            mid_term_scores: $('#mid_term_scores').val(),
+            previous_scores: $('#previous_scores').val(),
+            health_status: $('#health_status').val()
+        };
+        
+        $.ajax({
+            url: '/predict_knn',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                let recommendation = '';
+                let color = '';
+                let specific_advice = '';
+                
+                switch(response.prediction) {
+                    case 'low':
+                        color = 'warning';
+                        recommendation = 'You may need to increase your study hours and focus more on core subjects.';
+                        specific_advice = `
+                            <ul class="text-start">
+                                <li>Increase study hours to at least 8 hours per day</li>
+                                <li>Improve attendance to above 90%</li>
+                                <li>Join a regular study group</li>
+                                <li>Focus on getting adequate sleep (7-8 hours)</li>
+                            </ul>
+                        `;
+                        break;
+                    case 'medium':
+                        color = 'info';
+                        recommendation = 'Your current study habits are good, but there\'s room for improvement.';
+                        specific_advice = `
+                            <ul class="text-start">
+                                <li>Balance your study hours with adequate rest</li>
+                                <li>Maintain high attendance</li>
+                                <li>Focus on areas where your previous scores were lower</li>
+                                <li>Consider joining a study group if you haven't already</li>
+                            </ul>
+                        `;
+                        break;
+                    case 'high':
+                        color = 'success';
+                        recommendation = 'You\'re on the right track! Keep up the good work and maintain your current study habits.';
+                        specific_advice = `
+                            <ul class="text-start">
+                                <li>Continue your current study routine</li>
+                                <li>Help mentor other students (teaching reinforces learning)</li>
+                                <li>Consider advanced topics or projects</li>
+                                <li>Maintain a healthy work-life balance</li>
+                            </ul>
+                        `;
+                        break;
+                }
+                
+                $('#results').html(`
+                    <div class="alert alert-${color}">
+                        <h4>Performance Level: ${response.prediction.toUpperCase()}</h4>
+                        <p>${recommendation}</p>
+                        <hr>
+                        <h5>Personalized Recommendations:</h5>
+                        ${specific_advice}
+                        <p class="small text-muted mt-3">Based on similar students' performance patterns</p>
+                    </div>
+                `);
+            },
+            error: function() {
+                $('#results').html(`
+                    <div class="alert alert-danger">
+                        <h4>Error</h4>
+                        <p>An error occurred while generating recommendations. Please try again.</p>
+                    </div>
+                `);
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

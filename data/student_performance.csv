@@ -1,0 +1,201 @@
+Student_ID,Study_Hours_per_Week,Class_Attendance_Percentage,Parental_Education_Level,Previous_Exam_Scores,Sleep_Hours_Per_Day,Extracurricular_Activities,Midterm_Exam_Score,Final_Exam_Score,Pass_Fail_Status
+S001,33,97,Master's,78,4.5,No,47,55,Pass
+S002,19,61,Master's,40,7.6,Yes,68,33,Fail
+S003,12,54,Bachelor's,42,6.7,No,94,44,Fail
+S004,25,86,Master's,52,6.3,No,78,62,Pass
+S005,23,81,High School,67,8.6,Yes,42,62,Pass
+S006,27,58,Bachelor's,96,5.5,Yes,71,57,Pass
+S007,15,90,High School,99,6.6,Yes,49,76,Pass
+S008,15,84,High School,88,7.5,No,49,61,Pass
+S009,28,68,Bachelor's,64,8.0,Yes,58,59,Pass
+S010,28,97,High School,95,6.3,No,85,76,Pass
+S011,7,65,Master's,72,8.2,No,73,51,Pass
+S012,26,52,High School,77,7.8,No,99,49,Fail
+S013,6,69,Bachelor's,92,4.3,Yes,72,57,Pass
+S014,28,73,Bachelor's,45,4.2,Yes,62,38,Fail
+S015,34,82,Bachelor's,97,7.1,No,94,72,Pass
+S016,6,73,High School,83,5.7,Yes,67,54,Pass
+S017,25,60,Bachelor's,84,5.0,Yes,71,57,Pass
+S018,37,98,Bachelor's,71,6.9,Yes,89,74,Pass
+S019,16,57,High School,84,5.7,No,46,44,Fail
+S020,26,85,Master's,86,6.7,No,68,66,Pass
+S021,29,87,High School,60,6.3,Yes,47,51,Pass
+S022,31,89,Bachelor's,55,6.9,No,40,52,Pass
+S023,32,69,Bachelor's,93,6.0,Yes,96,66,Pass
+S024,20,84,High School,60,7.5,Yes,94,48,Fail
+S025,19,97,Master's,50,4.9,Yes,42,41,Fail
+S026,7,74,Bachelor's,99,7.5,Yes,63,69,Pass
+S027,11,84,Bachelor's,76,6.1,No,62,50,Pass
+S028,25,74,Bachelor's,75,8.4,No,98,63,Pass
+S029,13,78,High School,74,6.6,No,47,54,Pass
+S030,22,67,Bachelor's,58,8.9,Yes,93,60,Pass
+S031,8,95,Master's,59,7.0,Yes,96,49,Fail
+S032,29,67,Bachelor's,96,5.1,Yes,86,60,Pass
+S033,18,51,Bachelor's,57,8.1,No,76,47,Fail
+S034,13,84,Master's,86,5.7,Yes,42,67,Pass
+S035,30,65,Bachelor's,80,5.7,No,90,57,Pass
+S036,6,90,High School,88,4.2,No,72,63,Pass
+S037,24,85,High School,53,6.7,No,67,58,Pass
+S038,32,82,High School,54,6.7,No,86,62,Pass
+S039,11,53,Master's,70,5.8,No,47,45,Fail
+S040,12,82,Bachelor's,40,8.5,No,73,49,Fail
+S041,39,63,High School,92,4.6,Yes,74,72,Pass
+S042,18,70,Master's,93,5.7,Yes,71,64,Pass
+S043,21,97,Bachelor's,93,5.6,No,63,74,Pass
+S044,8,69,Master's,42,4.5,No,53,46,Fail
+S045,6,57,High School,55,6.4,Yes,71,39,Fail
+S046,10,56,High School,62,7.4,No,95,54,Pass
+S047,8,52,High School,96,6.6,No,85,53,Pass
+S048,33,66,Master's,50,4.8,Yes,82,56,Pass
+S049,22,82,Master's,51,5.9,No,55,43,Fail
+S050,30,97,High School,49,4.0,No,43,49,Fail
+S051,38,61,Master's,71,8.3,No,91,68,Pass
+S052,14,71,High School,55,4.4,Yes,76,49,Fail
+S053,18,71,High School,47,7.0,Yes,93,51,Pass
+S054,35,95,Bachelor's,77,8.9,Yes,60,64,Pass
+S055,19,79,Master's,51,6.7,No,53,49,Fail
+S056,12,87,High School,63,8.6,No,70,57,Pass
+S057,18,87,High School,67,5.2,Yes,94,58,Pass
+S058,27,94,Master's,92,7.8,No,87,77,Pass
+S059,25,57,Bachelor's,47,6.7,No,57,39,Fail
+S060,20,76,Bachelor's,97,7.6,No,46,70,Pass
+S061,22,76,High School,67,4.3,No,49,49,Fail
+S062,28,83,Master's,75,4.7,No,46,62,Pass
+S063,30,70,Bachelor's,65,4.7,Yes,72,60,Pass
+S064,29,79,Master's,47,7.4,No,62,45,Fail
+S065,33,82,Master's,97,8.2,Yes,60,69,Pass
+S066,19,77,High School,99,7.7,No,58,74,Pass
+S067,5,96,Bachelor's,89,4.2,Yes,87,70,Pass
+S068,29,82,High School,67,8.3,No,58,54,Pass
+S069,11,54,Bachelor's,67,5.8,Yes,75,55,Pass
+S070,13,97,Bachelor's,76,6.0,No,68,67,Pass
+S071,28,68,Bachelor's,80,4.5,Yes,99,72,Pass
+S072,5,53,Bachelor's,75,7.7,No,57,43,Fail
+S073,12,84,Bachelor's,66,4.9,Yes,41,42,Fail
+S074,28,98,Master's,93,6.8,No,40,76,Pass
+S075,15,66,High School,56,8.2,Yes,86,47,Fail
+S076,21,93,Master's,48,4.4,Yes,44,44,Fail
+S077,12,77,Bachelor's,72,6.7,No,59,59,Pass
+S078,39,79,High School,92,5.2,No,50,72,Pass
+S079,39,78,Bachelor's,59,5.7,Yes,81,51,Pass
+S080,37,95,High School,52,6.4,No,41,56,Pass
+S081,9,55,Master's,67,5.8,Yes,42,46,Fail
+S082,32,84,High School,87,7.2,Yes,62,58,Pass
+S083,11,90,High School,68,6.4,Yes,94,49,Fail
+S084,13,86,High School,52,6.9,No,51,41,Fail
+S085,12,73,High School,85,7.7,Yes,59,58,Pass
+S086,16,78,High School,74,6.8,Yes,44,51,Pass
+S087,38,98,Bachelor's,45,6.9,No,76,57,Pass
+S088,37,95,High School,57,6.8,No,77,56,Pass
+S089,27,80,High School,90,5.9,No,69,71,Pass
+S090,28,84,Master's,44,5.7,No,48,53,Pass
+S091,39,82,High School,86,8.5,Yes,73,62,Pass
+S092,26,70,Master's,64,7.0,Yes,92,58,Pass
+S093,31,81,Bachelor's,41,5.2,Yes,83,57,Pass
+S094,39,72,High School,49,6.5,Yes,74,43,Fail
+S095,5,82,Master's,95,5.7,No,91,70,Pass
+S096,39,52,Master's,69,8.7,Yes,97,61,Pass
+S097,18,67,Bachelor's,89,4.0,Yes,61,59,Pass
+S098,7,74,High School,98,5.1,No,83,65,Pass
+S099,5,91,High School,84,5.8,Yes,63,50,Pass
+S100,9,80,Master's,44,6.4,Yes,56,33,Fail
+S101,30,52,High School,94,8.3,Yes,49,60,Pass
+S102,18,89,Master's,95,4.4,Yes,69,59,Pass
+S103,31,95,High School,72,8.0,Yes,95,68,Pass
+S104,13,73,Master's,93,4.3,Yes,98,67,Pass
+S105,19,99,High School,40,8.2,No,85,57,Pass
+S106,19,81,Bachelor's,57,4.3,No,62,42,Fail
+S107,30,96,High School,71,4.1,Yes,71,59,Pass
+S108,17,71,High School,86,7.5,Yes,56,62,Pass
+S109,36,72,Bachelor's,88,9.0,No,89,78,Pass
+S110,36,51,High School,50,8.5,Yes,90,56,Pass
+S111,8,76,Bachelor's,60,6.9,Yes,56,48,Fail
+S112,34,91,High School,65,8.6,Yes,53,64,Pass
+S113,27,51,Master's,64,4.0,No,48,49,Fail
+S114,19,75,Master's,61,8.9,Yes,79,57,Pass
+S115,33,66,High School,98,6.5,No,41,65,Pass
+S116,17,89,High School,66,7.6,Yes,84,53,Pass
+S117,36,82,High School,88,8.1,No,64,77,Pass
+S118,11,58,Master's,52,7.6,No,78,37,Fail
+S119,26,92,High School,72,6.7,Yes,48,49,Fail
+S120,32,97,Master's,73,6.4,No,93,73,Pass
+S121,6,88,Bachelor's,80,8.2,Yes,61,49,Fail
+S122,10,78,Master's,74,5.0,No,82,58,Pass
+S123,32,91,Master's,40,8.8,Yes,85,55,Pass
+S124,32,75,Bachelor's,60,7.6,Yes,43,59,Pass
+S125,24,84,Master's,87,5.0,No,65,58,Pass
+S126,34,99,High School,94,7.7,Yes,97,84,Pass
+S127,15,74,High School,45,6.6,Yes,68,38,Fail
+S128,32,73,Master's,67,7.5,No,84,64,Pass
+S129,29,62,High School,56,7.8,Yes,73,40,Fail
+S130,37,56,Master's,44,4.4,Yes,62,49,Fail
+S131,5,85,High School,70,6.5,No,76,58,Pass
+S132,31,94,High School,44,8.7,No,50,48,Fail
+S133,17,69,Master's,77,5.6,Yes,45,58,Pass
+S134,7,50,High School,42,7.0,Yes,57,40,Fail
+S135,10,57,Master's,92,5.8,No,60,50,Pass
+S136,12,95,High School,62,6.3,No,81,56,Pass
+S137,31,65,High School,76,6.7,Yes,75,54,Pass
+S138,13,63,Bachelor's,92,6.7,No,80,55,Pass
+S139,37,61,Bachelor's,76,5.0,Yes,77,61,Pass
+S140,28,72,Master's,49,7.4,Yes,73,44,Fail
+S141,19,64,Bachelor's,49,4.4,Yes,56,39,Fail
+S142,36,77,Master's,58,4.7,Yes,76,60,Pass
+S143,36,83,Bachelor's,56,4.0,Yes,64,56,Pass
+S144,28,51,High School,60,4.6,No,77,52,Pass
+S145,16,81,Master's,53,6.4,No,97,42,Fail
+S146,6,72,Master's,48,7.0,No,51,36,Fail
+S147,7,71,High School,85,8.0,No,62,65,Pass
+S148,21,74,Master's,40,4.5,Yes,92,39,Fail
+S149,6,71,Master's,90,8.3,Yes,81,57,Pass
+S150,6,71,Bachelor's,84,7.7,Yes,61,64,Pass
+S151,32,98,Master's,52,6.0,Yes,60,64,Pass
+S152,27,91,High School,43,8.7,No,66,52,Pass
+S153,36,55,Bachelor's,40,9.0,Yes,96,50,Pass
+S154,37,64,Bachelor's,88,5.0,Yes,70,65,Pass
+S155,5,92,High School,79,5.9,No,45,56,Pass
+S156,23,86,High School,71,8.6,No,66,50,Pass
+S157,6,82,Bachelor's,73,7.6,No,79,53,Pass
+S158,30,57,Master's,67,4.2,No,73,60,Pass
+S159,36,93,Bachelor's,70,7.9,Yes,51,54,Pass
+S160,10,93,High School,47,8.1,Yes,84,43,Fail
+S161,36,54,Bachelor's,78,7.8,No,96,56,Pass
+S162,8,88,High School,65,8.0,Yes,92,49,Fail
+S163,15,53,Bachelor's,97,8.1,Yes,46,62,Pass
+S164,21,55,Master's,73,4.9,Yes,49,57,Pass
+S165,28,94,Bachelor's,93,5.2,No,84,70,Pass
+S166,9,81,Bachelor's,93,7.2,Yes,56,53,Pass
+S167,38,79,High School,42,8.5,No,65,59,Pass
+S168,10,96,High School,98,5.6,Yes,60,73,Pass
+S169,26,84,High School,89,6.9,Yes,67,65,Pass
+S170,15,89,Bachelor's,51,7.4,Yes,97,44,Fail
+S171,20,65,Master's,40,6.3,No,85,50,Pass
+S172,37,62,High School,93,7.6,Yes,41,71,Pass
+S173,13,99,High School,83,8.5,No,99,72,Pass
+S174,10,91,Bachelor's,44,7.1,No,93,40,Fail
+S175,20,79,High School,69,6.7,No,82,49,Fail
+S176,33,68,Master's,69,6.2,Yes,40,50,Pass
+S177,7,66,Master's,98,6.9,Yes,90,65,Pass
+S178,24,68,High School,96,5.8,Yes,92,72,Pass
+S179,23,77,High School,56,6.0,Yes,75,50,Pass
+S180,30,75,Bachelor's,87,6.7,No,90,60,Pass
+S181,7,86,Master's,86,4.3,No,65,63,Pass
+S182,23,75,Master's,62,5.1,No,68,47,Fail
+S183,24,72,High School,54,6.7,Yes,60,40,Fail
+S184,36,58,Bachelor's,76,6.2,No,50,57,Pass
+S185,11,61,Master's,60,5.7,Yes,79,45,Fail
+S186,37,50,Master's,53,7.7,No,50,39,Fail
+S187,22,50,Bachelor's,41,7.5,Yes,75,38,Fail
+S188,5,96,Bachelor's,50,4.8,Yes,88,41,Fail
+S189,15,83,Master's,90,8.4,No,98,57,Pass
+S190,32,81,Master's,78,6.5,No,78,65,Pass
+S191,29,97,Bachelor's,77,7.7,No,79,65,Pass
+S192,27,74,Master's,99,6.9,No,74,67,Pass
+S193,35,89,High School,73,9.0,Yes,93,70,Pass
+S194,34,94,High School,77,7.8,No,73,64,Pass
+S195,39,50,Bachelor's,89,7.5,No,94,60,Pass
+S196,11,65,Bachelor's,73,7.9,No,86,54,Pass
+S197,20,88,Bachelor's,57,4.7,Yes,63,43,Fail
+S198,30,54,High School,69,5.0,Yes,93,60,Pass
+S199,6,71,Master's,54,7.6,No,61,38,Fail
+S200,5,78,High School,66,6.5,Yes,44,44,Fail

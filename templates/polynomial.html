@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}Polynomial Regression Prediction{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="text-center mb-4">Final Score Prediction Based on Study Hours</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form id="predictionForm">
+                        <div class="mb-3">
+                            <label for="study_hours" class="form-label">Study Hours per Day</label>
+                            <input type="number" class="form-control" id="study_hours" name="study_hours" required min="1" max="12" step="0.5">
+                            <div class="form-text">Enter the number of hours you study per day (1-12 hours)</div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Predict Final Score</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-4">
+        <div class="col-md-8">
+            <div class="card" id="resultCard" style="display: none;">
+                <div class="card-body text-center">
+                    <h4>Predicted Final Score</h4>
+                    <div class="display-4" id="predictionResult"></div>
+                    <p class="text-muted">Based on your study hours per day</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    $('#predictionForm').on('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = {
+            study_hours: $('#study_hours').val()
+        };
+        
+        $.ajax({
+            url: '/predict_polynomial',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                const prediction = response.prediction;
+                $('#predictionResult').text(prediction.toFixed(1) + '%');
+                
+                // Add color coding based on prediction
+                if (prediction >= 90) {
+                    $('#predictionResult').removeClass('text-danger text-warning').addClass('text-success');
+                } else if (prediction >= 70) {
+                    $('#predictionResult').removeClass('text-success text-danger').addClass('text-warning');
+                } else {
+                    $('#predictionResult').removeClass('text-success text-warning').addClass('text-danger');
+                }
+                
+                $('#resultCard').show();
+            },
+            error: function(xhr, status, error) {
+                alert('Error making prediction. Please try again.');
+                console.error(error);
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 
