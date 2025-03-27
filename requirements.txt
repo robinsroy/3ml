@@ -5,4 +5,10 @@ scikit-learn==0.24.2
 matplotlib==3.4.2
 seaborn==0.11.1
 joblib==1.0.2 
-gunicorn
+gunicorn==20.1.0
+Werkzeug==2.0.1
+Jinja2==3.0.1
+itsdangerous==2.0.1
+MarkupSafe==2.0.1
+scipy==1.7.0
+threadpoolctl==2.1.0
