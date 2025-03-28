@@ -303,19 +303,20 @@ def predict_logistic():
     data = request.get_json()
     
     # Convert categorical input to numeric
-    parental_education_map = {'0': 0, '1': 1, '2': 2, '3': 3}
+    parental_education_map = {'high_school': 0, 'bachelor': 1, 'master': 2, 'phd': 3}
     study_group_map = {'none': 0, 'occasional': 1, 'regular': 2}
     health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
     
     # Get study group and health status values or set defaults
     study_group_val = study_group_map.get(data.get('study_group', 'occasional'), 1)
     health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
+    parental_education_val = parental_education_map.get(data.get('parental_education', 'bachelor'), 1)
     
     features = np.array([[
         float(data['study_hours']),
         float(data['attendance']),
         float(data['previous_scores']),
-        float(data['parental_education']),  # Already encoded in frontend
+        float(parental_education_val),
         float(data['mid_term_scores']),
         float(study_group_val),
         float(health_status_val)
@@ -334,15 +335,19 @@ def predict_logistic():
 def predict_knn():
     data = request.get_json()
     
-    # Get health status value or set default
+    # Convert categorical input to numeric
+    extracurricular_map = {'low': 0, 'medium': 1, 'high': 2}
     health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
+    
+    # Get health status and extracurricular values or set defaults
     health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
+    extracurricular_val = extracurricular_map.get(data.get('extracurricular_activities', 'medium'), 1)
     
     features = np.array([[
         float(data['study_hours']),
         float(data['attendance']),
         float(data['sleep_hours']),
-        float(data['extracurricular_activities']),  # Already encoded in frontend
+        float(extracurricular_val),
         float(data['mid_term_scores']),
         float(data.get('previous_scores', 75)),  # Default to 75 if not provided
         float(health_status_val)
@@ -378,8 +383,6 @@ def predict_polynomial():
         'prediction': float(prediction)
     })
 
-# Train models once on startup
-@app.before_first_request
 def train_models_on_startup():
     global logistic_model, knn_model, poly_model, scaler, poly_features_transformer
     # Only train if models aren't already trained
@@ -392,6 +395,11 @@ if __name__ == '__main__':
     # For local development, train models immediately
     print("Training models during startup...")
     train_models()
+    
+    # Register a function to train models when the application starts
+    with app.app_context():
+        train_models_on_startup()
+        
     # Use PORT environment variable for Render compatibility
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=False) 
