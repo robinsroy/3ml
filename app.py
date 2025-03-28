@@ -24,7 +24,9 @@ logging.basicConfig(level=logging.WARNING)
 logistic_model = None
 knn_model = None
 poly_model = None
-scaler = StandardScaler()
+logistic_scaler = StandardScaler()  # Separate scalers for each model
+knn_scaler = StandardScaler()
+poly_scaler = StandardScaler()
 label_encoder = LabelEncoder()
 poly_features_transformer = None
 
@@ -186,7 +188,7 @@ def load_and_preprocess_data():
     return df
 
 def train_models():
-    global logistic_model, knn_model, poly_model, scaler, poly_features_transformer
+    global logistic_model, knn_model, poly_model, logistic_scaler, knn_scaler, poly_scaler, poly_features_transformer
     
     # Load and preprocess data
     df = load_and_preprocess_data()
@@ -212,10 +214,10 @@ def train_models():
     X_poly = df[['study_hours']]
     y_poly = df['final_score']
     
-    # Scale features
-    X_log_scaled = scaler.fit_transform(X_log)
-    X_knn_scaled = scaler.fit_transform(X_knn)
-    X_poly_scaled = scaler.fit_transform(X_poly)
+    # Scale features with separate scalers
+    X_log_scaled = logistic_scaler.fit_transform(X_log)
+    X_knn_scaled = knn_scaler.fit_transform(X_knn)
+    X_poly_scaled = poly_scaler.fit_transform(X_poly)
     
     # Train-test split for each model with small test set (more training data)
     X_log_train, X_log_test, y_log_train, y_log_test = train_test_split(X_log_scaled, y_log, test_size=0.1, random_state=42, stratify=y_log)
@@ -300,91 +302,109 @@ def train():
 
 @app.route('/predict_logistic', methods=['POST'])
 def predict_logistic():
+    if logistic_model is None:
+        return jsonify({'error': 'Model not trained yet'}), 400
+        
     data = request.get_json()
     
-    # Convert categorical input to numeric
-    parental_education_map = {'high_school': 0, 'bachelor': 1, 'master': 2, 'phd': 3}
-    study_group_map = {'none': 0, 'occasional': 1, 'regular': 2}
-    health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
-    
-    # Get study group and health status values or set defaults
-    study_group_val = study_group_map.get(data.get('study_group', 'occasional'), 1)
-    health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
-    parental_education_val = parental_education_map.get(data.get('parental_education', 'bachelor'), 1)
-    
-    features = np.array([[
-        float(data['study_hours']),
-        float(data['attendance']),
-        float(data['previous_scores']),
-        float(parental_education_val),
-        float(data['mid_term_scores']),
-        float(study_group_val),
-        float(health_status_val)
-    ]])
-    
-    features_scaled = scaler.transform(features)
-    prediction = logistic_model.predict(features_scaled)[0]
-    probability = logistic_model.predict_proba(features_scaled)[0]
-    
-    return jsonify({
-        'prediction': int(prediction),
-        'probability': float(probability[1] if len(probability) > 1 else probability[0])
-    })
+    try:
+        # Convert categorical input to numeric
+        parental_education_map = {'high_school': 0, 'bachelor': 1, 'master': 2, 'phd': 3}
+        study_group_map = {'none': 0, 'occasional': 1, 'regular': 2}
+        health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
+        
+        # Get study group and health status values or set defaults
+        study_group_val = study_group_map.get(data.get('study_group', 'occasional'), 1)
+        health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
+        parental_education_val = parental_education_map.get(data.get('parental_education', 'bachelor'), 1)
+        
+        features = np.array([[
+            float(data['study_hours']),
+            float(data['attendance']),
+            float(data['previous_scores']),
+            float(parental_education_val),
+            float(data['mid_term_scores']),
+            float(study_group_val),
+            float(health_status_val)
+        ]])
+        
+        features_scaled = logistic_scaler.transform(features)
+        prediction = logistic_model.predict(features_scaled)[0]
+        probability = logistic_model.predict_proba(features_scaled)[0]
+        
+        return jsonify({
+            'prediction': int(prediction),
+            'probability': float(probability[1] if len(probability) > 1 else probability[0])
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/predict_knn', methods=['POST'])
 def predict_knn():
+    if knn_model is None:
+        return jsonify({'error': 'Model not trained yet'}), 400
+        
     data = request.get_json()
     
-    # Convert categorical input to numeric
-    extracurricular_map = {'low': 0, 'medium': 1, 'high': 2}
-    health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
-    
-    # Get health status and extracurricular values or set defaults
-    health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
-    extracurricular_val = extracurricular_map.get(data.get('extracurricular_activities', 'medium'), 1)
-    
-    features = np.array([[
-        float(data['study_hours']),
-        float(data['attendance']),
-        float(data['sleep_hours']),
-        float(extracurricular_val),
-        float(data['mid_term_scores']),
-        float(data.get('previous_scores', 75)),  # Default to 75 if not provided
-        float(health_status_val)
-    ]])
-    
-    features_scaled = scaler.transform(features)
-    prediction = knn_model.predict(features_scaled)[0]
-    neighbors = knn_model.kneighbors(features_scaled, return_distance=False)[0]
-    
-    return jsonify({
-        'prediction': str(prediction),
-        'neighbors': neighbors.tolist()
-    })
+    try:
+        # Convert categorical input to numeric
+        extracurricular_map = {'low': 0, 'medium': 1, 'high': 2}
+        health_status_map = {'poor': 0, 'average': 1, 'good': 2, 'excellent': 3}
+        
+        # Get health status and extracurricular values or set defaults
+        health_status_val = health_status_map.get(data.get('health_status', 'good'), 2)
+        extracurricular_val = extracurricular_map.get(data.get('extracurricular_activities', 'medium'), 1)
+        
+        features = np.array([[
+            float(data['study_hours']),
+            float(data['attendance']),
+            float(data['sleep_hours']),
+            float(extracurricular_val),
+            float(data['mid_term_scores']),
+            float(data.get('previous_scores', 75)),  # Default to 75 if not provided
+            float(health_status_val)
+        ]])
+        
+        features_scaled = knn_scaler.transform(features)
+        prediction = knn_model.predict(features_scaled)[0]
+        neighbors = knn_model.kneighbors(features_scaled, return_distance=False)[0]
+        
+        return jsonify({
+            'prediction': str(prediction),
+            'neighbors': neighbors.tolist()
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 @app.route('/predict_polynomial', methods=['POST'])
 def predict_polynomial():
+    if poly_model is None:
+        return jsonify({'error': 'Model not trained yet'}), 400
+        
     data = request.get_json()
     
-    # Only use study hours for prediction
-    features = np.array([[
-        float(data['study_hours'])
-    ]])
-    
-    features_scaled = scaler.transform(features)
-    features_poly = poly_features_transformer.transform(features_scaled)
-    
-    prediction = poly_model.predict(features_poly)[0]
-    
-    # Ensure prediction is within valid range (0-100)
-    prediction = np.clip(prediction, 0, 100)
-    
-    return jsonify({
-        'prediction': float(prediction)
-    })
+    try:
+        # Only use study hours for prediction
+        features = np.array([[
+            float(data['study_hours'])
+        ]])
+        
+        features_scaled = poly_scaler.transform(features)
+        features_poly = poly_features_transformer.transform(features_scaled)
+        
+        prediction = poly_model.predict(features_poly)[0]
+        
+        # Ensure prediction is within valid range (0-100)
+        prediction = np.clip(prediction, 0, 100)
+        
+        return jsonify({
+            'prediction': float(prediction)
+        })
+    except Exception as e:
+        return jsonify({'error': str(e)}), 400
 
 def train_models_on_startup():
-    global logistic_model, knn_model, poly_model, scaler, poly_features_transformer
+    global logistic_model, knn_model, poly_model, logistic_scaler, knn_scaler, poly_scaler, poly_features_transformer
     # Only train if models aren't already trained
     if logistic_model is None:
         print("Training models on first request...")
